@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuenta Atrás</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(to top, black, rgb(65, 65, 65)) fixed;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+      border: 1px solid white;
+      width: 100%;
+      height: 100px;
+      box-sizing: border-box;
+    }
+
+    main {
+      margin-top: 20px;
+      text-align: center;
+      padding-bottom: 20px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 18px;
+      margin: 10px;
+      width: 150px;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 18px;
+      margin: 5px;
+      cursor: pointer;
+      background-color: black;
+      color: white;
+      border: 1px solid white;
+    }
+
+    button:hover {
+      background-color: white;
+      color: black;
+    }
+
+    #contador {
+      font-size: 30px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cuenta Atrás</h1>
+  </header>
+
+  <main>
+    <input type="number" id="tiempo" placeholder="Segundos">
+    <button onclick="iniciarCuentaAtras()">Iniciar</button>
+    <p id="contador">Tiempo restante: </p>
+  </main>
+
+  <script>
+    let intervalo; // Variable para almacenar el temporizador
+
+    function iniciarCuentaAtras() {
+      clearInterval(intervalo); // Limpiar cualquier cuenta anterior
+
+      let tiempo = parseInt(document.getElementById('tiempo').value);
+      let contador = document.getElementById('contador');
+
+      if (isNaN(tiempo) || tiempo <= 0) {
+        contador.textContent = "Por favor, ingresa un número válido.";
+        return;
+      }
+
+      contador.textContent = "Tiempo restante: " + tiempo + "s";
+
+      intervalo = setInterval(() => {
+        tiempo--;
+        contador.textContent = "Tiempo restante: " + tiempo + "s";
+
+        if (tiempo <= 0) {
+          clearInterval(intervalo);
+          contador.textContent = "¡Tiempo terminado!";
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
