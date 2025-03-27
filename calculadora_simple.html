@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Simple</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(to top, rgb(0, 0, 0), rgb(65, 65, 65));
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+      border: 1px solid white;
+      width: 100%;
+      height: 100px;
+      box-sizing: border-box;
+    }
+    main {
+      margin-top: 20px;
+      text-align: center;
+    }
+    input {
+      padding: 10px;
+      font-size: 18px;
+      margin: 10px;
+      width: 100px;
+      text-align: center;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 18px;
+      margin: 5px;
+      cursor: pointer;
+      background-color: black;
+      color: white;
+      border: 1px solid white;
+    }
+    button:hover {
+      background-color: white;
+      color: black;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Calculadora Simple</h1>
+  </header>
+  <main>
+    <input type="number" id="num1" placeholder="Número 1">
+    <input type="number" id="num2" placeholder="Número 2">
+    <br>
+    <button onclick="calcular('+')">+</button>
+    <button onclick="calcular('-')">-</button>
+    <button onclick="calcular('*')">×</button>
+    <button onclick="calcular('/')">÷</button>
+    <p id="resultado">Resultado: </p>
+  </main>
+  <script>
+    function calcular(operacion) {
+      let num1 = parseFloat(document.getElementById('num1').value);
+      let num2 = parseFloat(document.getElementById('num2').value);
+      let resultado = document.getElementById('resultado');
+
+      if (isNaN(num1) || isNaN(num2)) {
+        resultado.textContent = "Por favor, ingresa números válidos.";
+        return;
+      }
+
+      let total;
+      switch (operacion) {
+        case '+': total = num1 + num2; break;
+        case '-': total = num1 - num2; break;
+        case '*': total = num1 * num2; break;
+        case '/': 
+          if (num2 === 0) {
+            resultado.textContent = "Error: División por cero.";
+            return;
+          }
+          total = num1 / num2; 
+          break;
+      }
+
+      resultado.textContent = "Resultado: " + total;
+    }
+  </script>
+</body>
+</html>

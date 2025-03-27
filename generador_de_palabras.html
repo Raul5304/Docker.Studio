@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de Listas Aleatorias</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(to top, black, rgb(65, 65, 65)) fixed;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+      border: 1px solid white;
+      width: 100%;
+      height: 100px;
+      box-sizing: border-box;
+    }
+    main {
+      margin-top: 20px;
+      text-align: center;
+      padding-bottom: 20px;
+    }
+    input {
+      padding: 10px;
+      font-size: 18px;
+      margin: 10px;
+      width: 200px;
+      text-align: center;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 18px;
+      margin: 5px;
+      cursor: pointer;
+      background-color: black;
+      color: white;
+      border: 1px solid white;
+    }
+    button:hover {
+      background-color: white;
+      color: black;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+    li {
+      font-size: 20px;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Generador de Listas Aleatorias</h1>
+  </header>
+  <main>
+    <input type="number" id="cantidad" placeholder="Cantidad de elementos">
+    <button onclick="generarLista()">Generar Lista</button>
+    <ul id="lista"></ul>
+  </main>
+  <script>
+    function generarLista() {
+      let cantidad = parseInt(document.getElementById('cantidad').value);
+      let lista = document.getElementById('lista');
+
+      if (isNaN(cantidad) || cantidad <= 0) {
+        alert("Por favor, ingresa un número válido mayor a 0.");
+        return;
+      }
+
+      const palabrasAleatorias = ["Sol", "Electricidad", "Tiburón", "Tigre", "Cuchillo", "Bocadillo", "Específico", "Tatuaje", "Garza", "Araña", "Héroe", "Bingo", "Química", "Luna", "Estrella", "Mar", "Montaña", "Río", "Nube", "Viento", "Fuego", "Tierra", "Bosque", "Lago", "Tormenta", "Aurora", "Oceano", "Uranio", "Terminal", "Vehículo", "Atómico", "Elemental", "Galaxia", "Humano", "Trípode", "Distopia", "Jurado", "Extremo", "Núcleo", "Locura", "Lamento", "Jungla", "Pasado", "Esperanza", "Amor", "Serpiente", "Rescate", "Guerrero", "Hermano", "Luto", "Hospital", "Nacimiento", "Amanecer", "Oscuridad"];
+      lista.innerHTML = "";
+
+      for (let i = 0; i < cantidad; i++) {
+        let palabra = palabrasAleatorias[Math.floor(Math.random() * palabrasAleatorias.length)];
+        let elemento = document.createElement("li");
+        elemento.textContent = palabra;
+        lista.appendChild(elemento);
+      }
+    }
+  </script>
+</body>
+</html>
+
