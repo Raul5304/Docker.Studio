@@ -80,7 +80,15 @@
         return;
       }
 
-      const palabrasAleatorias = ["Sol", "Electricidad", "Tiburón", "Tigre", "Cuchillo", "Bocadillo", "Específico", "Tatuaje", "Garza", "Araña", "Héroe", "Bingo", "Química", "Luna", "Estrella", "Mar", "Montaña", "Río", "Nube", "Viento", "Fuego", "Tierra", "Bosque", "Lago", "Tormenta", "Aurora", "Oceano", "Uranio", "Terminal", "Vehículo", "Atómico", "Elemental", "Galaxia", "Humano", "Trípode", "Distopia", "Jurado", "Extremo", "Núcleo", "Locura", "Lamento", "Jungla", "Pasado", "Esperanza", "Amor", "Serpiente", "Rescate", "Guerrero", "Hermano", "Luto", "Hospital", "Nacimiento", "Amanecer", "Oscuridad"];
+      if (cantidad > 999) {
+        alert("Error: La cantidad no puede ser mayor a 999.");
+        return;
+      }
+
+      const palabrasAleatorias = ["Sol", "Electricidad", "Tiburón", "Tigre", "Cuchillo", "Bocadillo", "Específico", "Tatuaje", 
+      "Garza", "Araña", "Héroe", "Bingo", "Química", "Luna", "Estrella", "Mar", "Montaña", "Río", "Nube", "Viento", "Fuego", "Tierra", "Bosque", "Lago", "Tormenta", "Aurora", 
+      "Oceano", "Uranio", "Terminal", "Vehículo", "Atómico", "Elemental", "Galaxia", "Humano", "Trípode", "Distopia", "Jurado", "Extremo", "Núcleo", "Locura", "Lamento", 
+      "Jungla", "Pasado", "Esperanza", "Amor", "Serpiente", "Rescate", "Guerrero", "Hermano", "Luto", "Hospital", "Nacimiento", "Amanecer", "Oscuridad"];
       lista.innerHTML = "";
 
       for (let i = 0; i < cantidad; i++) {
