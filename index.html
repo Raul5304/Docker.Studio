@@ -30,6 +30,10 @@
       flex: 1;
       padding: 20px;
       font-size: 25px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
     aside {
       position: absolute;
@@ -53,6 +57,15 @@
       color: white;
       text-decoration: none;
     }
+    button {
+      background-color: white;
+      color: black;
+      font-size: 20px;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -62,15 +75,29 @@
   <main>
     <p>Bienvenido a mi página web servida desde un contenedor Docker, hola.</p>
     <p>En los enlaces de la derecha hay diversos links para programas JavaScript</p>
+    <p>Presiona este botón para ir a una página aleatoria -> <button onclick="irPaginaAleatoria()">Ir a una página aleatoria</button></p>
   </main>
   <aside>
     <h2>Enlaces</h2>
-    <ul>
+    <ul id="linkList">
       <li><a href="subpages/calculadora_simple.html">Calculadora simple</a></li>
       <li><a href="subpages/generador_de_palabras.html">Generador de listas</a></li>
       <li><a href="subpages/contador.html">Cuenta atrás</a></li>
       <li><a href="#">Enlace 4</a></li>
     </ul>
   </aside>
+  
+  <script>
+    function irPaginaAleatoria() {
+      const links = document.querySelectorAll('#linkList a');
+      const validLinks = Array.from(links).filter(link => link.href !== '#');
+      if (validLinks.length > 0) {
+        const randomIndex = Math.floor(Math.random() * validLinks.length);
+        window.location.href = validLinks[randomIndex].href;
+      } else {
+        alert('No hay enlaces válidos disponibles.');
+      }
+    }
+  </script>
 </body>
 </html>

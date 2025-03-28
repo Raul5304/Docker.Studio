@@ -14,6 +14,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      transition: background-color 0.5s ease;
     }
 
     header {
@@ -78,6 +79,7 @@
 
     function iniciarCuentaAtras() {
       clearInterval(intervalo); // Limpiar cualquier cuenta anterior
+      document.body.style.background = "linear-gradient(to top, black, rgb(65, 65, 65)) fixed";
 
       let tiempo = parseInt(document.getElementById('tiempo').value);
       let contador = document.getElementById('contador');
@@ -96,9 +98,11 @@
         if (tiempo <= 0) {
           clearInterval(intervalo);
           contador.textContent = "¡Tiempo terminado!";
+          document.body.style.background = "red"; // Cambia el fondo a rojo
         }
       }, 1000);
     }
   </script>
 </body>
 </html>
+
