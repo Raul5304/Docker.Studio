@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juego de Círculo y Obstáculos</title>
+  <style>
+    canvas {
+      display: block;
+      margin: auto;
+      background-image: url('imagenes/fondo.jpg');
+      background-size: cover;
+    }
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Juego de Círculo y Obstáculos</h1>
+  <canvas id="juego" width="1780" height="770"></canvas>
+  <p id="puntuacion">Puntuación: 0</p>
+  <p id="gameOver" style="display:none; color: red; font-size: 24px;">Game Over. Pulsa espacio para reiniciar.</p>
+
+  <script>
+    const canvas = document.getElementById("juego");
+    const ctx = canvas.getContext("2d");
+
+    const ANCHO = canvas.width;
+    const ALTO = canvas.height;
+
+    let posX = 100;
+    let posY = ALTO - 80;
+    const radio = 30;
+    let velY = 0;
+    const saltoInicial = -25;
+    let enSalto = false;
+    let saltosRestantes = 2;
+    let velX = 0;
+    let puntuacion = 0;
+    let corriendo = true;
+
+    const obstaculos = [];
+    const obstaculosSaltados = [];
+
+    document.addEventListener("keydown", (e) => {
+      if (!corriendo && e.code === "Space") {
+        reiniciarJuego();
+        return;
+      }
+
+      if (e.code === "ArrowLeft") velX = -5;
+      else if (e.code === "ArrowRight") velX = 5;
+      else if (e.code === "Space" && saltosRestantes > 0) {
+        velY = saltoInicial;
+        enSalto = true;
+        saltosRestantes--;
+      }
+    });
+
+    document.addEventListener("keyup", (e) => {
+      if (e.code === "ArrowLeft" || e.code === "ArrowRight") velX = 0;
+    });
+
+    function dibujarJugador() {
+      ctx.beginPath();
+      ctx.arc(posX, posY, radio, 0, Math.PI * 2);
+      ctx.fillStyle = "blue";
+      ctx.fill();
+    }
+
+    function dibujarObstaculos() {
+      ctx.fillStyle = "red";
+      obstaculos.forEach((obs) => {
+        ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
+      });
+    }
+
+    function moverObstaculos() {
+      obstaculos.forEach((obs) => {
+        obs.x -= 5;
+      });
+    }
+
+    function generarObstaculo() {
+      if (Math.random() < 0.02) {
+        const altura = 50 + Math.random() * 200;
+        obstaculos.push({ x: ANCHO, y: ALTO - altura, w: 40, h: altura });
+      }
+    }
+
+    function detectarColisiones() {
+      for (let obs of obstaculos) {
+        if (
+          posX + radio > obs.x &&
+          posX - radio < obs.x + obs.w &&
+          posY + radio > obs.y
+        ) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function comprobarSaltos() {
+      obstaculos.forEach((obs, idx) => {
+        if (
+          posY < obs.y &&
+          posX + radio > obs.x &&
+          posX - radio < obs.x + obs.w &&
+          !obstaculosSaltados.includes(idx)
+        ) {
+          puntuacion++;
+          document.getElementById("puntuacion").textContent = `Puntuación: ${puntuacion}`;
+          obstaculosSaltados.push(idx);
+        }
+      });
+    }
+
+    function actualizar() {
+      if (!corriendo) return;
+
+      ctx.clearRect(0, 0, ANCHO, ALTO);
+
+      generarObstaculo();
+      moverObstaculos();
+
+      posX += velX;
+      if (posX - radio < 0) posX = radio;
+      if (posX + radio > ANCHO) posX = ANCHO - radio;
+
+      if (enSalto) {
+        posY += velY;
+        velY += 1;
+        if (posY >= ALTO - 50 - radio) {
+          posY = ALTO - 50 - radio;
+          velY = 0;
+          enSalto = false;
+          saltosRestantes = 2;
+        }
+      }
+
+      comprobarSaltos();
+
+      if (detectarColisiones()) {
+        corriendo = false;
+        document.getElementById("gameOver").style.display = "block";
+      }
+
+      dibujarJugador();
+      dibujarObstaculos();
+
+      requestAnimationFrame(actualizar);
+    }
+
+    function reiniciarJuego() {
+      posX = 100;
+      posY = ALTO - 80;
+      velY = 0;
+      enSalto = false;
+      saltosRestantes = 2;
+      velX = 0;
+      puntuacion = 0;
+      document.getElementById("puntuacion").textContent = `Puntuación: ${puntuacion}`;
+      obstaculos.length = 0;
+      obstaculosSaltados.length = 0;
+      corriendo = true;
+      document.getElementById("gameOver").style.display = "none";
+      actualizar();
+    }
+
+    actualizar();
+  </script>
+</body>
+</html>
